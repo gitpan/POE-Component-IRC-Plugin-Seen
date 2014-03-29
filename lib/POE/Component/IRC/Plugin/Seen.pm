@@ -1,6 +1,6 @@
 package POE::Component::IRC::Plugin::Seen;
 
-our $VERSION = 0.001;
+our $VERSION = 0.001001;
 
 use v5.14;
 use strict;
@@ -14,76 +14,76 @@ use POE::Component::IRC::Plugin qw/PCI_EAT_NONE PCI_EAT_PLUGIN/;
 ##################################################
 
 sub new{
-  my $class = shift;
-  my $self = { @_ };
+	my $class = shift;
+	my $self = { @_ };
 
-  $self->{dbobj} = tie my %db, DB_File => $self->{filename};
-  $self->{db} = \%db;
-  bless $self, $class
+	$self->{dbobj} = tie my %db, DB_File => $self->{filename};
+	$self->{db} = \%db;
+	bless $self, $class
 }
 
 sub log_event {
-  my ($self, $nick, $event) = @_;
-  my $time = localtime;
-  $self->{db}->{$nick} = "$time $event";
-  $self->{dbobj}->sync;
-  PCI_EAT_NONE
+	my ($self, $nick, $event) = @_;
+	my $time = localtime;
+	$self->{db}->{$nick} = "$time $event";
+	$self->{dbobj}->sync;
+	PCI_EAT_NONE
 }
 
 sub seen {
-  my ($self, $irc, $nick, $to, $from) = @_;
-  if (exists $self->{db}->{$nick}) {
-	$irc->yield(privmsg => $to => "I last saw $nick $self->{db}->{$nick}")
-  } else {
-	$irc->yield(privmsg => $to => "I haven't seen $nick")
-  }
-  PCI_EAT_PLUGIN
+	my ($self, $irc, $nick, $to, $from) = @_;
+	if (exists $self->{db}->{$nick}) {
+		$irc->yield(privmsg => $to => "I last saw $nick $self->{db}->{$nick}")
+	} else {
+		$irc->yield(privmsg => $to => "I haven't seen $nick")
+	}
+	PCI_EAT_PLUGIN
 }
 
 sub PCI_register {
-  my ($self, $irc) = @_;
-  $irc->plugin_register($self, SERVER => qw/ctcp_action join part public msg/);
-  1
+	my ($self, $irc) = @_;
+	$irc->plugin_register($self, SERVER => qw/ctcp_action join part public msg/);
+	1
 }
 
 sub PCI_unregister { 1 }
 
 sub S_ctcp_action {
-  my ($self, $irc, $rfullname, $rchannels, $rmessage) = @_;
-  my $nick = parse_user $$rfullname;
+	my ($self, $irc, $rfullname, $rchannels, $rmessage) = @_;
+	my $nick = parse_user $$rfullname;
 
-  log_event $self, $nick => "on $$rchannels->[0] doing: * $$rmessage"
+	log_event $self, $nick => "on $$rchannels->[0] doing: * $$rmessage"
 }
 
 sub S_public {
-  my ($self, $irc, $rfullname, $rchannels, $rmessage) = @_;
-  my $nick = parse_user $$rfullname;
-  my $mynick = $irc->nick_name;
+	my ($self, $irc, $rfullname, $rchannels, $rmessage) = @_;
+	my $nick = parse_user $$rfullname;
+	my $mynick = $irc->nick_name;
 
-  seen $self, $irc, $1, $$rchannels->[0], $nick if $$rmessage =~ /^(?:$mynick [,:])?\s*seen\s+([^ ]+)/x;
-  log_event $self, $nick => "on $$rchannels->[0] saying $$rmessage"
+	seen $self, $irc, $1, $$rchannels->[0], $nick if $$rmessage =~ /^(?:$mynick [,:])?\s*seen\s+([^ ]+)/x;
+	log_event $self, $nick => "on $$rchannels->[0] saying $$rmessage"
 }
 
 sub S_join {
-  my ($self, $irc, $rfullname, $rchannel) = @_;
-  my $nick = parse_user $$rfullname;
+	my ($self, $irc, $rfullname, $rchannel) = @_;
+	my $nick = parse_user $$rfullname;
 
-  log_event $self, $nick => "joining $$rchannel"
+	log_event $self, $nick => "joining $$rchannel"
 }
 
 sub S_part {
-  my ($self, $irc, $rfullname, $rchannel, $rmessage) = @_;
-  my $nick = parse_user $$rfullname;
-  my $msg = $$rmessage ? " with message '$$rmessage'" : '';
+	my ($self, $irc, $rfullname, $rchannel, $rmessage) = @_;
+	my $nick = parse_user $$rfullname;
+	my $msg = $$rmessage ? " with message '$$rmessage'" : '';
 
-  log_event $self, $nick => "parting $$rchannel$msg"
+	log_event $self, $nick => "parting $$rchannel$msg"
 }
 
 sub S_msg {
-  my ($self, $irc, $rfullname, $rtargets, $rmessage) = @_;
-  my $nick = parse_user $$rfullname;
+	my ($self, $irc, $rfullname, $rtargets, $rmessage) = @_;
+	my $nick = parse_user $$rfullname;
 
-  seen $self, $irc, $$rmessage, $$rtargets->[0], $nick if $$rmessage =~ /^seen\s+([^ ]+)/
+	seen $self, $irc, $$rmessage, $$rtargets->[0], $nick if $$rmessage =~ /^seen\s+([^ ]+)/
 }
 
 1;
@@ -128,7 +128,7 @@ Marius Gavrilescu C<< <marius@ieval.ro> >>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2013 by Marius Gavrilescu
+Copyright (C) 2013,2014 by Marius Gavrilescu
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.14.2 or,

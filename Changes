@@ -1,4 +1,8 @@
 Revision history for Perl extension POE::Component::IRC::Plugin::Seen.
 
-0.001 Sun 11 Aug 23:03:40 EEST 2013
-	- Initial Release
+0.001001 2014-03-29T22:56Z
+ - Improve Makefile.PL
+ - Update Changes to follow CPAN::Changes::Spec
+
+0.001 2013-08-11T23:03+03:00
+ - Initial Release

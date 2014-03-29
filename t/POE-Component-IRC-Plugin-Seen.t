@@ -21,10 +21,10 @@ my $rmgv = \'mgv!marius@ieval.ro';
 
 # Sub setup
 sub runtest{
-  my ($message, $expect, $comment) = @_;
-  undef $last_msg;
-  $self->S_public($mockirc, $rmgv, \$channels, \$message);
-  is($last_msg, $expect, $comment)
+	my ($message, $expect, $comment) = @_;
+	undef $last_msg;
+	$self->S_public($mockirc, $rmgv, \$channels, \$message);
+	is($last_msg, $expect, $comment)
 }
 
 runtest 'something', undef, 'initialize';

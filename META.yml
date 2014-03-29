@@ -1,25 +1,27 @@
---- #YAML:1.0
-name:               POE-Component-IRC-Plugin-Seen
-version:            0.001
-abstract:           PoCo-IRC plugin that remembers seeing people
+---
+abstract: 'PoCo-IRC plugin that remembers seeing people'
 author:
-    - Marius Gavrilescu <marius@ieval.ro>
-license:            perl
-distribution_type:  module
-configure_requires:
-    ExtUtils::MakeMaker:  0
+  - 'Marius Gavrilescu <marius@ieval.ro>'
 build_requires:
-    Test::MockObject:  0
-requires:
-    DB_File:              0
-    IRC::Utils:           0.05
-    perl:                 5.014
-    POE::Component::IRC::Plugin:  0
-no_index:
-    directory:
-        - t
-        - inc
-generated_by:       ExtUtils::MakeMaker version 6.57_05
+  Test::MockObject: '0'
+configure_requires:
+  ExtUtils::MakeMaker: '0'
+dynamic_config: 0
+generated_by: 'ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.133380'
+license: perl
 meta-spec:
-    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
-    version:  1.4
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: '1.4'
+name: POE-Component-IRC-Plugin-Seen
+no_index:
+  directory:
+    - t
+    - inc
+requires:
+  DB_File: '0'
+  IRC::Utils: '0.05'
+  POE::Component::IRC::Plugin: '0'
+  perl: '5.014'
+resources:
+  repository: https://git.ieval.ro/?p=poe-component-irc-plugin-seen.git
+version: '0.001001'

@@ -1,5 +1,5 @@
-POE-Component-IRC-Plugin-Seen version 0.001
-===========================================
+POE-Component-IRC-Plugin-Seen version 0.001001
+==============================================
 
 POE::Component::IRC::Plugin::Seen is a PoCo-IRC plugin that remembers what each person around it did last.
 
@@ -23,7 +23,7 @@ This module requires these other modules and libraries:
 
 COPYRIGHT AND LICENCE
 
-Copyright (C) 2013 by Marius Gavrilescu
+Copyright (C) 2013,2014 by Marius Gavrilescu
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.14.2 or,
